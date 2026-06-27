@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Project page for TASME-DRL: Task-Aware Soft Mixture of Experts Deep Reinforcement Learning for multi-scenario autonomous driving.">
+  <title>TASME-DRL</title>
+  <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5f6f7c;
+      --line: #dce4ea;
+      --soft: #f4f7f9;
+      --panel: #ffffff;
+      --accent: #1f7a8c;
+      --accent-dark: #14505f;
+      --warm: #b45a3c;
+      --green: #52796f;
+      --shadow: 0 18px 45px rgba(23, 32, 42, 0.1);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: "Noto Sans", "Google Sans", Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 44px 0 36px;
+      background:
+        linear-gradient(180deg, rgba(244, 247, 249, 0.92), rgba(255, 255, 255, 0.98)),
+        url("static/carla_env.png") center / cover no-repeat;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font-size: clamp(2rem, 3.6vw, 3rem);
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0 0 22px;
+      font-size: clamp(1.55rem, 2.3vw, 2rem);
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .subtitle {
+      margin: 18px auto 0;
+      color: var(--ink);
+      font-size: 1rem;
+      max-width: 760px;
+    }
+
+    .affiliation {
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 9px 15px;
+      color: #fff;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.16s ease, background 0.16s ease;
+    }
+
+    .button:hover {
+      color: #fff;
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .button.secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.78);
+      border-color: var(--line);
+    }
+
+    .button.secondary:hover {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .button svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      fill: currentColor;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section.soft {
+      background: var(--soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .lead {
+      margin: 0 auto;
+      max-width: 930px;
+      color: var(--ink);
+      font-size: 1rem;
+      text-align: justify;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 34px auto 0;
+      max-width: 930px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .highlight {
+      position: relative;
+      min-height: 0;
+      padding: 0 22px;
+      background: transparent;
+      border: 0;
+    }
+
+    .highlight + .highlight {
+      border-left: 1px solid var(--line);
+    }
+
+    .highlight::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .highlight p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .figure-block {
+      margin-top: 24px;
+    }
+
+    .figure-block img {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(23, 32, 42, 0.08);
+    }
+
+    .caption {
+      margin: 12px auto 0;
+      max-width: 920px;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .result-figure {
+      max-width: 860px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .framework-figure {
+      max-width: 780px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .result-note {
+      max-width: 860px;
+      margin: 22px auto 0;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.65;
+      text-align: justify;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .info-panel {
+      padding: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .info-panel p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .task-grid,
+    .video-grid,
+    .activation-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .task-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 24px;
+    }
+
+    .video-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 26px;
+    }
+
+    .activation-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 26px;
+    }
+
+    .video-card {
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .video-card video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f171d;
+      object-fit: cover;
+    }
+
+    .video-card .body {
+      padding: 14px 16px 16px;
+    }
+
+    .video-card p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 6px 11px;
+      color: var(--accent-dark);
+      background: #e8f3f5;
+      border: 1px solid #c7e1e6;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+    }
+
+    .tab {
+      min-height: 38px;
+      padding: 8px 12px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .tab[aria-selected="true"] {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .tab:focus-visible,
+    .button:focus-visible {
+      outline: 3px solid rgba(31, 122, 140, 0.25);
+      outline-offset: 2px;
+    }
+
+    .scenario-viewer {
+      margin-top: 28px;
+      padding: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(23, 32, 42, 0.08);
+    }
+
+    .scenario-viewer video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f171d;
+      border-radius: var(--radius);
+      object-fit: cover;
+    }
+
+    .viewer-copy {
+      margin-top: 14px;
+      color: var(--ink);
+    }
+
+    .viewer-copy p {
+      margin: 0;
+    }
+
+    .footer {
+      padding: 30px 0;
+      color: var(--muted);
+      background: #fff;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        min-height: auto;
+        padding-top: 32px;
+      }
+
+      .two-col,
+      .highlights,
+      .task-grid,
+      .video-grid,
+      .activation-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights {
+        gap: 12px;
+      }
+
+      .highlight {
+        padding: 0 0 0 18px;
+      }
+
+      .highlight + .highlight {
+        border-left: 0;
+      }
+
+      .section {
+        padding: 54px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Deep Reinforcement Learning with Task-Aware Soft Mixture of Experts for Multi-Scenario Autonomous Driving</h1>
+        <p class="subtitle">
+          A unified multi-task driving policy that routes state and task information through a cross-attention soft mixture of experts.
+        </p>
+        <p class="affiliation">School of Mechanical Engineering, Beijing Institute of Technology</p>
+        <div class="button-row" aria-label="Project links">
+          <a class="button" href="static/revised_TASME_paper_without_track.pdf" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6V2zm7 1.8V8h4.2L13 3.8zM8 12v2h8v-2H8zm0 4v2h8v-2H8z"></path></svg>
+            <span>Paper</span>
+          </a>
+          <a class="button secondary" href="https://github.com/bitmobility/TASME_Code" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.4.7-4.1-1.4-4.1-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.3 4.8 18.3 5 18.3 5c.6 1.6.2 2.9.1 3.2.8.9 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"></path></svg>
+            <span>Code</span>
+          </a>
+          <a class="button secondary" href="#videos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7L8 5z"></path></svg>
+            <span>Videos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section soft" id="abstract">
+      <div class="container">
+        <h2>Abstract</h2>
+        <p class="lead">
+          Achieving reliable decision-making across a wide range of driving scenarios is a primary goal of intelligent vehicles. Existing studies typically focus on developing specialized driving policies for specific scenarios, which exhibit limited generalizability and may fail to ensure robust safety across diverse tasks encountered in real-world environments. To address these limitations, we propose Task-Aware Soft Mixture of Experts Deep Reinforcement Learning, a unified and generalizable driving policy for multi-scenario autonomous driving. TASME-DRL introduces a cross-attention soft gating mechanism for task-aware expert aggregation and an adaptive expert activation regularization method for balanced expert utilization. Experiments show that the framework reduces negative transfer in multi-task learning and improves robustness, adaptability, and generalization across diverse and unseen driving tasks.
+        </p>
+
+        <div class="highlights" aria-label="Paper highlights">
+          <article class="highlight">
+            <p>Unified multi-task policy for diverse autonomous driving scenarios.</p>
+          </article>
+          <article class="highlight">
+            <p>Cross-attention soft gating for task-aware expert mixture.</p>
+          </article>
+          <article class="highlight">
+            <p>Adaptive activation regularization for balanced expert utilization.</p>
+          </article>
+          <article class="highlight">
+            <p>Strong training, testing, robustness, and generalization performance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="framework">
+      <div class="container">
+        <h2>Framework</h2>
+        <div class="two-col">
+          <div class="info-panel">
+            <h3>Task-Aware Routing</h3>
+            <p>
+              The policy uses task representations as queries and expert outputs as key-value features. Cross-attention scores estimate task-expert compatibility, then softly aggregate the expert policies into a single task-conditioned decision representation.
+            </p>
+          </div>
+          <div class="info-panel">
+            <h3>Balanced Specialization</h3>
+            <p>
+              Adaptive expert activation regularization prevents premature expert collapse while preserving state-dependent specialization, allowing related tasks to share useful expert knowledge without forcing all tasks through one dominant route.
+            </p>
+          </div>
+        </div>
+        <figure class="figure-block framework-figure">
+          <img src="static/framework.png" alt="Detailed TASME-DRL framework diagram">
+          <figcaption class="caption">
+            TASME-DRL integrates a shared backbone, multiple independent experts, a cross-attention soft gating mechanism, and expert activation regularization into a multi-expert DRL algorithm.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section soft" id="tasks">
+      <div class="container">
+        <h2>Driving Tasks</h2>
+        <figure class="figure-block">
+          <img src="static/tasks.png" alt="Illustration of six driving tasks">
+          <figcaption class="caption">
+            The benchmark covers heterogeneous scenario dynamics: intersection navigation, highway on-ramp merging, straight highway driving, and roundabout navigation.
+          </figcaption>
+        </figure>
+        <div class="pill-list" aria-label="Task list">
+          <span class="pill">Intersection Left</span>
+          <span class="pill">Intersection Straight</span>
+          <span class="pill">Intersection Right</span>
+          <span class="pill">Ramp Merge</span>
+          <span class="pill">Straight Highway</span>
+          <span class="pill">Roundabout</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="container">
+        <h2>Training Compare</h2>
+        <figure class="figure-block result-figure">
+          <img src="static/training_compare.png" alt="Training performance comparison">
+          <figcaption class="caption">
+            Training curves compare TASME-DRL against multi-task and task-conditioned baselines.
+          </figcaption>
+        </figure>
+        <p class="result-note">
+          The experiments show that TASME-DRL improves training efficiency and overall driving performance across multiple driving tasks. Compared with baseline methods, the proposed task-aware soft mixture of experts reduces performance degradation caused by negative transfer in multi-task learning.
+        </p>
+      </div>
+    </section>
+
+    <section class="section soft" id="videos">
+      <div class="container">
+        <h2>CARLA Demonstrations</h2>
+
+        <div class="tabs" role="tablist" aria-label="CARLA scenario selector">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-video="static/carla_vedio/intersection_left.mp4" data-title="Intersection Left" data-copy="The ego vehicle completes a left-turn maneuver while interacting with surrounding traffic.">Intersection Left</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_straight.mp4" data-title="Intersection Straight" data-copy="The ego vehicle crosses the intersection while maintaining safe interaction with other vehicles.">Intersection Straight</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_right.mp4" data-title="Intersection Right" data-copy="The ego vehicle performs a right-turn maneuver in an intersection scenario.">Intersection Right</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/ramp_merge.mp4" data-title="Ramp Merge" data-copy="The policy merges from an on-ramp into highway traffic.">Ramp Merge</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/highway.mp4" data-title="Straight Highway" data-copy="The agent drives on a straight multilane highway under surrounding traffic.">Highway</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/roudabout.mp4" data-title="Roundabout" data-copy="The ego vehicle navigates a roundabout with multiple potential conflict points.">Roundabout</button>
+        </div>
+
+        <div class="scenario-viewer">
+          <video id="scenarioVideo" controls muted loop playsinline autoplay>
+            <source src="static/carla_vedio/intersection_left.mp4" type="video/mp4">
+          </video>
+          <div class="viewer-copy">
+            <h3 id="scenarioTitle">Intersection Left</h3>
+            <p id="scenarioCopy">The ego vehicle completes a left-turn maneuver while interacting with surrounding traffic.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="activation-videos">
+      <div class="container">
+        <h2>Per-Step Expert Activation Analysis</h2>
+        <p class="lead">
+          Step-level activation weights reveal how the soft gating module adjusts the expert mixture with changes in local driving states. The synchronized videos connect these activation patterns with the corresponding driving behavior.
+        </p>
+        <figure class="figure-block result-figure">
+          <img src="static/activation_per_step_2.png" alt="Step-level expert activation analysis">
+          <figcaption class="caption">
+            Expert activation weights vary over time and show state-dependent specialization across intersection, highway, and roundabout tasks.
+          </figcaption>
+        </figure>
+        <div class="activation-grid">
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_intersection_left_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Intersection Left</h3>
+              <p>Expert activation during a left-turn intersection trajectory.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_intersection_straight_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Intersection Straight</h3>
+              <p>Expert mixture changes while crossing an intersection.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_intersection_right_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Intersection Right</h3>
+              <p>Step-level gating for the right-turn task.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_highway_merge_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Highway Merge</h3>
+              <p>Expert usage during on-ramp merging.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_highway_straight_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Straight Highway</h3>
+              <p>Expert activation in multilane highway driving.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <video controls muted loop playsinline>
+              <source src="static/per_step_activation_vedio/seed1_roundabout_enter_episode001_expert_activation.mp4" type="video/mp4">
+            </video>
+            <div class="body">
+              <h3>Roundabout</h3>
+              <p>Task-aware expert routing through a roundabout trajectory.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>TASME-DRL project page for multi-scenario autonomous driving research.</p>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const scenarioVideo = document.getElementById("scenarioVideo");
+    const scenarioSource = scenarioVideo.querySelector("source");
+    const scenarioTitle = document.getElementById("scenarioTitle");
+    const scenarioCopy = document.getElementById("scenarioCopy");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+        tab.setAttribute("aria-selected", "true");
+        scenarioSource.src = tab.dataset.video;
+        scenarioTitle.textContent = tab.dataset.title;
+        scenarioCopy.textContent = tab.dataset.copy;
+        scenarioVideo.load();
+        scenarioVideo.play().catch(() => {});
+      });
+    });
+  </script>
+</body>
+
+</html>
