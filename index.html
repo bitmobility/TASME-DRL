@@ -60,17 +60,29 @@
     }
 
     .hero {
+      position: relative;
+      overflow: hidden;
       min-height: 92vh;
       display: grid;
       align-items: center;
       padding: 44px 0 36px;
-      background:
-        linear-gradient(180deg, rgba(244, 247, 249, 0.92), rgba(255, 255, 255, 0.98)),
-        url("static/carla_env.png") center / cover no-repeat;
+      background: url("static/carla_env.png") center / cover no-repeat;
       border-bottom: 1px solid var(--line);
     }
 
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(244, 247, 249, 0.48), rgba(255, 255, 255, 0.64));
+      backdrop-filter: blur(7px) saturate(1.12);
+      -webkit-backdrop-filter: blur(7px) saturate(1.12);
+      pointer-events: none;
+    }
+
     .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1fr;
       justify-items: center;
@@ -354,6 +366,10 @@
       margin: 0 0 18px;
     }
 
+    .figure-block + .tabs {
+      margin-top: 28px;
+    }
+
     .tab {
       min-height: 38px;
       padding: 8px 12px;
@@ -393,6 +409,10 @@
       background: #0f171d;
       border-radius: var(--radius);
       object-fit: cover;
+    }
+
+    .activation-viewer video {
+      object-fit: contain;
     }
 
     .viewer-copy {
@@ -563,12 +583,12 @@
         <h2>CARLA Demonstrations</h2>
 
         <div class="tabs" role="tablist" aria-label="CARLA scenario selector">
-          <button class="tab" type="button" role="tab" aria-selected="true" data-video="static/carla_vedio/intersection_left.mp4" data-title="Intersection Left" data-copy="The ego vehicle completes a left-turn maneuver while interacting with surrounding traffic.">Intersection Left</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_straight.mp4" data-title="Intersection Straight" data-copy="The ego vehicle crosses the intersection while maintaining safe interaction with other vehicles.">Intersection Straight</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_right.mp4" data-title="Intersection Right" data-copy="The ego vehicle performs a right-turn maneuver in an intersection scenario.">Intersection Right</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/ramp_merge.mp4" data-title="Ramp Merge" data-copy="The policy merges from an on-ramp into highway traffic.">Ramp Merge</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/highway.mp4" data-title="Straight Highway" data-copy="The agent drives on a straight multilane highway under surrounding traffic.">Highway</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/roudabout.mp4" data-title="Roundabout" data-copy="The ego vehicle navigates a roundabout with multiple potential conflict points.">Roundabout</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="true" data-video="static/carla_vedio/intersection_left.mp4" data-title="Intersection Left" data-copy="The ego vehicle completes a left-turn maneuver while interacting with surrounding traffic.">Intersection Left</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_straight.mp4" data-title="Intersection Straight" data-copy="The ego vehicle crosses the intersection while maintaining safe interaction with other vehicles.">Intersection Straight</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/intersection_right.mp4" data-title="Intersection Right" data-copy="The ego vehicle performs a right-turn maneuver in an intersection scenario.">Intersection Right</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/ramp_merge.mp4" data-title="Ramp Merge" data-copy="The policy merges from an on-ramp into highway traffic.">Ramp Merge</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/highway.mp4" data-title="Straight Highway" data-copy="The agent drives on a straight multilane highway under surrounding traffic.">Highway</button>
+          <button class="tab scenario-tab" type="button" role="tab" aria-selected="false" data-video="static/carla_vedio/roudabout.mp4" data-title="Roundabout" data-copy="The ego vehicle navigates a roundabout with multiple potential conflict points.">Roundabout</button>
         </div>
 
         <div class="scenario-viewer">
@@ -595,61 +615,23 @@
             Expert activation weights vary over time and show state-dependent specialization across intersection, highway, and roundabout tasks.
           </figcaption>
         </figure>
-        <div class="activation-grid">
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_intersection_left_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Intersection Left</h3>
-              <p>Expert activation during a left-turn intersection trajectory.</p>
-            </div>
-          </article>
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_intersection_straight_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Intersection Straight</h3>
-              <p>Expert mixture changes while crossing an intersection.</p>
-            </div>
-          </article>
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_intersection_right_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Intersection Right</h3>
-              <p>Step-level gating for the right-turn task.</p>
-            </div>
-          </article>
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_highway_merge_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Highway Merge</h3>
-              <p>Expert usage during on-ramp merging.</p>
-            </div>
-          </article>
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_highway_straight_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Straight Highway</h3>
-              <p>Expert activation in multilane highway driving.</p>
-            </div>
-          </article>
-          <article class="video-card">
-            <video controls muted loop playsinline>
-              <source src="static/per_step_activation_vedio/seed1_roundabout_enter_episode001_expert_activation.mp4" type="video/mp4">
-            </video>
-            <div class="body">
-              <h3>Roundabout</h3>
-              <p>Task-aware expert routing through a roundabout trajectory.</p>
-            </div>
-          </article>
+        <div class="tabs" role="tablist" aria-label="Expert activation scenario selector">
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="true" data-video="static/per_step_activation_vedio/seed1_intersection_left_episode001_expert_activation.mp4" data-title="Intersection Left" data-copy="Expert activation during a left-turn intersection trajectory.">Intersection Left</button>
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="false" data-video="static/per_step_activation_vedio/seed1_intersection_straight_episode001_expert_activation.mp4" data-title="Intersection Straight" data-copy="Expert mixture changes while crossing an intersection.">Intersection Straight</button>
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="false" data-video="static/per_step_activation_vedio/seed1_intersection_right_episode001_expert_activation.mp4" data-title="Intersection Right" data-copy="Step-level gating for the right-turn task.">Intersection Right</button>
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="false" data-video="static/per_step_activation_vedio/seed1_highway_merge_episode001_expert_activation.mp4" data-title="Highway Merge" data-copy="Expert usage during on-ramp merging.">Highway Merge</button>
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="false" data-video="static/per_step_activation_vedio/seed1_highway_straight_episode001_expert_activation.mp4" data-title="Straight Highway" data-copy="Expert activation in multilane highway driving.">Straight Highway</button>
+          <button class="tab activation-tab" type="button" role="tab" aria-selected="false" data-video="static/per_step_activation_vedio/seed1_roundabout_enter_episode001_expert_activation.mp4" data-title="Roundabout" data-copy="Task-aware expert routing through a roundabout trajectory.">Roundabout</button>
+        </div>
+
+        <div class="scenario-viewer activation-viewer">
+          <video id="activationVideo" controls muted loop playsinline autoplay>
+            <source src="static/per_step_activation_vedio/seed1_intersection_left_episode001_expert_activation.mp4" type="video/mp4">
+          </video>
+          <div class="viewer-copy">
+            <h3 id="activationTitle">Intersection Left</h3>
+            <p id="activationCopy">Expert activation during a left-turn intersection trajectory.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -663,11 +645,16 @@
   </footer>
 
   <script>
-    const tabs = document.querySelectorAll(".tab");
+    const tabs = document.querySelectorAll(".scenario-tab");
     const scenarioVideo = document.getElementById("scenarioVideo");
     const scenarioSource = scenarioVideo.querySelector("source");
     const scenarioTitle = document.getElementById("scenarioTitle");
     const scenarioCopy = document.getElementById("scenarioCopy");
+    const activationTabs = document.querySelectorAll(".activation-tab");
+    const activationVideo = document.getElementById("activationVideo");
+    const activationSource = activationVideo.querySelector("source");
+    const activationTitle = document.getElementById("activationTitle");
+    const activationCopy = document.getElementById("activationCopy");
 
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
@@ -678,6 +665,18 @@
         scenarioCopy.textContent = tab.dataset.copy;
         scenarioVideo.load();
         scenarioVideo.play().catch(() => {});
+      });
+    });
+
+    activationTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        activationTabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+        tab.setAttribute("aria-selected", "true");
+        activationSource.src = tab.dataset.video;
+        activationTitle.textContent = tab.dataset.title;
+        activationCopy.textContent = tab.dataset.copy;
+        activationVideo.load();
+        activationVideo.play().catch(() => {});
       });
     });
   </script>
